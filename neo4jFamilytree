@@ -1,0 +1,22 @@
+CREATE(janu:Person{name:'Janvi Dattani'}),(dad:Person{name:'Mayank Dattani'}),(mom:Person{name:'Neela Dattani'}),(brother:Person{name:'Pratham Dattani'}),
+(grandfather:Person{name:'Gordhandas Dattani'}),(grandmother:Person{name:'Sharmista Dattani'}),(uncle:Person{name:'Rakesh Dattani'})
+
+
+MATCH(janu:Person),(mom:Person) WHERE janu.name= "Janvi Dattani" AND mom.name="Neela Dattani" CREATE(janu)-[r: IS_CHILD_OF]->(mom) RETURN janu,mom
+MATCH(janu:Person),(dad:Person) WHERE janu.name= "Janvi Dattani" AND dad.name="Mayank Dattani" CREATE(janu)-[r: IS_CHILD_OF]->(dad) RETURN janu,dad
+MATCH(brother:Person),(dad:Person) WHERE brother.name= "Pratham Dattani" AND dad.name="Mayank Dattani" CREATE(brother)-[r: IS_CHILD_OF]->(dad) RETURN brother,dad
+MATCH(brother:Person),(mom:Person) WHERE brother.name= "Pratham Dattani" AND mom.name="Neela Dattani" CREATE(brother)-[r: IS_CHILD_OF]->(mom) RETURN brother,mom
+MATCH(dad:Person),(grandmother:Person) WHERE dad.name= "Mayank Dattani" AND grandmother.name="Sharmista Dattani" CREATE(dad)-[r: IS_CHILD_OF]->(grandmother) RETURN dad,grandmother
+MATCH(uncle:Person),(grandmother:Person) WHERE uncle.name= "Rakesh Dattani" AND grandmother.name="Sharmista Dattani" CREATE(uncle)-[r: IS_CHILD_OF]->(grandmother) RETURN uncle,grandmother
+MATCH(dad:Person),(grandfather:Person) WHERE dad.name= "Mayank Dattani" AND grandfather.name="Gordhandas Dattani" CREATE(dad)-[r: IS_CHILD_OF]->(grandfather) RETURN dad,grandfather
+MATCH(uncle:Person),(grandfather:Person) WHERE uncle.name= "Rakesh Dattani" AND grandfather.name="Gordhandas Dattani" CREATE(uncle)-[r: IS_CHILD_OF]->(grandfather) RETURN uncle,grandfather
+
+MATCH(brother:Person),(janu:Person) WHERE brother.name= "Pratham Dattani" AND janu.name="Janvi Dattani" CREATE(brother)-[r: IS_BROTHER_OF]->(janu) RETURN brother,janu
+MATCH(janu:Person),(brother:Person) WHERE brother.name= "Pratham Dattani" AND janu.name="Janvi Dattani" CREATE(janu)-[r: IS_SISTER_OF]->(brother) RETURN brother,janu
+
+MATCH(dad:Person),(mom:Person) WHERE dad.name= "Mayank Dattani" AND mom.name="Neela Dattani" CREATE(dad)-[r: IS_SPOUSE_OF]->(mom) RETURN dad,mom
+
+MATCH(mom:Person),(dad:Person) WHERE mom.name= "Neela Dattani" AND dad.name="Mayank Dattani" CREATE(mom)-[r: IS_SPOUSE_OF]->(dad) RETURN mom,dad
+MATCH(grandfather:Person),(grandmother:Person) WHERE grandfather.name= "Gordhandas Dattani" AND grandmother.name="Sharmista Dattani" CREATE(grandfather)-[r: IS_SPOUSE_OF]->(grandmother) RETURN grandfather,grandmother
+MATCH(grandfather:Person),(grandmother:Person) WHERE grandmother.name= "Sharmista Dattani" AND grandfather.name="Gordhandas Dattani" CREATE(grandmother)-[r: IS_SPOUSE_OF]->(grandfather) RETURN grandmother,grandfather
+
